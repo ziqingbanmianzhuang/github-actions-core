@@ -16,9 +16,6 @@ name: "Frontend Cypress E2E Tests"
 # description: "Cypress E2E tests supporting parallel testing with spec granularity"
 
 on:
-    pull_request:
-        branches:
-            - master
     workflow_call:
         inputs:
             node-version:

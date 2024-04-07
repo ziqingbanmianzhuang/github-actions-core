@@ -16,10 +16,6 @@ name: "UI unit tests"
 # description: "Jest unit tests"
 
 on:
-    pull_request:
-    push:
-        branches:
-            - master
     workflow_call:
         inputs:
             node-version:
