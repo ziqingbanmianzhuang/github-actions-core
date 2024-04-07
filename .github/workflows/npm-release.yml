@@ -55,7 +55,7 @@ jobs:
               run: |
                   git config --global user.name '${{ inputs.user }}'
                   git config --global user.email '${{ inputs.email }}'
-                  .github/tag-for-release.bash
+                  sh .github/tag-for-release.bash
               shell: bash
             - name: Set release version
               run: |
