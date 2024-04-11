@@ -12,11 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-name: hashicorp-aws CI/CD
+name: CI/CD
+
+"on":
+    pull_request:
+    push:
+        branches:
+            - master
 
 jobs:
+    yml-md-style-and-link-checks:
+        uses: ./.github/workflows/yml-md-style-and-link-checks.yml
+
     documentation-ci-cd:
         name: Test Documentation Build & Deploy Documentation to GitHub Pages
+        needs: yml-md-style-and-link-checks
         runs-on: ubuntu-latest
         defaults:
             run:

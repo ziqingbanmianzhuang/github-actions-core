@@ -15,7 +15,7 @@
 name: "Frontend NPM Release"
 # description: "Build and push React library onto NPM repository"
 
-on:
+"on":
     workflow_call:
         inputs:
             node-version:

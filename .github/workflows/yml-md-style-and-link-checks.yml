@@ -1,4 +1,4 @@
-# Copyright Jiaqi Liu
+# Copyright Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,30 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-name: "UI unit tests"
-# description: "Jest unit tests"
+name: YAML & Markdown Style and Link Check
 
 "on":
     workflow_call:
-        inputs:
-            node-version:
-                description: 'NodeJS version, such as "16"'
-                type: string
-                required: true
 
 jobs:
-    ui-unit-test:
-        name: Ui Unit Test Job
+    yaml-lint:
+        name: YAML Style Check
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - name: Set node version to ${{ inputs.node-version }}
-              uses: actions/setup-node@v3
+            - uses: actionshub/yamllint@main
+    markdown-lint:
+        name: Markdown Style Check
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actionshub/markdownlint@main
+    linkChecker:
+        name: Link Check
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Link Checker
+              uses: lycheeverse/lychee-action@v1.9.0
               with:
-                  node-version: ${{ inputs.node-version }}
-            - name: Install dependencies
-              run: yarn install
-              shell: bash
-            - name: Run unit tests
-              run: yarn test
-              shell: bash
+                  fail: true

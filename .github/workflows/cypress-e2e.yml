@@ -15,7 +15,7 @@
 name: "Frontend Cypress E2E Tests"
 # description: "Cypress E2E tests supporting parallel testing with spec granularity"
 
-on:
+"on":
     workflow_call:
         inputs:
             node-version:
@@ -48,7 +48,7 @@ jobs:
                   serve -s dist -l 3000 &
                   yarn wait-on-prod
                   yarn e2e --spec "${{ inputs.spec-relative-path }}"
-              fi
+                fi
               shell: bash
             - id: extract-spec-filename
               if: failure()
@@ -64,5 +64,3 @@ jobs:
                   path: |
                     ./cypress/videos
                     ./cypress/screenshots
-
-       

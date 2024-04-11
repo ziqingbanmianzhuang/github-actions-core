@@ -15,7 +15,7 @@
 name: "UI Code Style Checks"
 # description: "Prettier & ESLint in a yarn-based project"
 
-on:
+"on":
     workflow_call:
         inputs:
             node_version:
