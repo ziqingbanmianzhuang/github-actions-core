@@ -1,11 +1,9 @@
 ---
-slug: version-bump
-title: Bump Semantic Version Using hashicorp-aws
-authors: [jiaqi]
-tags: [CI/CD]
+sidebar_position: 6
+title: Bumping Semantic Version
 ---
 
-[//]: # (Copyright Jiaqi Liu)
+[//]: # (Copyright Paion Data)
 
 [//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
 [//]: # (you may not use this file except in compliance with the License.)
@@ -19,7 +17,7 @@ tags: [CI/CD]
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-hashicorp-aws offers a convenient versioning management approach for releasing software on GitHub.
+We offer a convenient versioning management approach for releasing software on GitHub.
 
 <!--truncate-->
 
@@ -42,7 +40,7 @@ hashicorp-aws offers a convenient versioning management approach for releasing s
   jobs:
     push-release-tag:
       if: github.ref == 'refs/heads/master'
-      uses: QubitPi/hashicorp-aws/.github/workflows/version-bump.yml@master
+      uses: paion-data/github-actions-core/.github/workflows/version-bump.yml@master
       with:
         user: QubitPi
         email: jack20220723@gmail.com

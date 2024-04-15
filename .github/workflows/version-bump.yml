@@ -1,4 +1,4 @@
-# Copyright Jiaqi Liu
+# Copyright Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,10 +35,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Download auto-version bump scripts
-        run: |
-          git clone https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
-          cp ../hashicorp-aws/.github/tag-for-release.bash .github/
-          cp ../hashicorp-aws/.github/upversion.py .github/
+        run: git clone https://github.com/paion-data/github-actions-core.git ../github-actions-core
       - name: Tag for release
         run: |
           git config --global user.name ${{ inputs.user }}

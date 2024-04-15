@@ -3,8 +3,8 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'GitHub Actions Core',
+  tagline: 'Reusable GitHub Actions',
   favicon: 'img/favicon.ico',
 
   url: 'https://paion-data.github.io',
@@ -30,10 +30,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl: 'https://github.com/paion-data/github-actions-core/tree/master/docs',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -46,20 +43,20 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'My Site',
+      title: 'Paion GitHub Actions',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'Logo',
         src: 'img/logo.svg',
       },
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'actionListSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Documentations',
         },
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/paion-data/github-actions-core',
           label: 'GitHub',
           position: 'right',
         },
@@ -72,8 +69,8 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'All Actions',
+              to: '/docs/yml-md-style-and-link-checks',
             },
           ],
         },
@@ -81,34 +78,27 @@ const config: Config = {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
-            },
+              label: 'GitHub',
+              href: 'https://github.com/paion-data/github-actions-core',
+            }
           ],
         },
         {
           title: 'More',
           items: [
             {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              label: 'GitHub Actions Documentations',
+              href: 'https://docs.github.com/en/actions',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Paion Data. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ['ruby', 'json', 'java'],
     },
   } satisfies Preset.ThemeConfig,
 };

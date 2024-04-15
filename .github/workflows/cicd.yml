@@ -1,4 +1,4 @@
-# Copyright Jiaqi Liu
+# Copyright Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,6 +23,19 @@ name: CI/CD
 jobs:
     yml-md-style-and-link-checks:
         uses: ./.github/workflows/yml-md-style-and-link-checks.yml
+
+    test-upversion:
+        name: Test upversion.py
+        needs: yml-md-style-and-link-checks
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - run: echo "LAST_TAG=1.2.3" >> $GITHUB_ENV
+            - run: |
+                NEW_TAG=$(LAST_TAG=${LAST_TAG} python .github/upversion.py)
+                if [[ "$NEW_TAG" != "1.2.4" ]]; then
+                    exit 1
+                fi
 
     documentation-ci-cd:
         name: Test Documentation Build & Deploy Documentation to GitHub Pages

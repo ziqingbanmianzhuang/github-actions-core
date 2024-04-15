@@ -1,4 +1,4 @@
-# Copyright Jiaqi Liu
+# Copyright Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,13 +13,12 @@
 # limitations under the License.
 ---
 name: "UI Code Style Checks"
-# description: "Prettier & ESLint in a yarn-based project"
 
 "on":
     workflow_call:
         inputs:
             node_version:
-                description: 'NodeJS    version, such as "16"'
+                description: 'NodeJS version, such as "16"'
                 required: true
 
 jobs:
