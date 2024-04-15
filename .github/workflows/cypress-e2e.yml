@@ -15,51 +15,61 @@
 name: "Frontend Cypress E2E Tests"
 
 "on":
-    workflow_call:
-        inputs:
-            node-version:
-                description: 'NodeJS version, such as "16"'
-                type: string
-                required: true
-            start-strategy:
-                description: '"yarn-start" or "serve"'
-                type: string
-                required: true
-            spec-relative-path:
-                description: "spec.ts file path relative to repo root"
-                type: string
-                required: true
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'NodeJS version, such as "16"'
+        type: string
+        required: true
+      start-strategy:
+        description: '"yarn-start" or "serve"'
+        type: string
+        required: true
+      spec-relative-path:
+        description: "spec.ts file path relative to repo root"
+        type: string
+        required: true
 
 jobs:
-    cypress-e2e-job:
-        name: Cypress E2E Job
-        runs-on: ubuntu-latest
-        steps:
-            - name: Run E2E tests in ${{ inputs.start-strategy }} mode
-              run: |
-                if [[ ${{ inputs.start-strategy }} == 'yarn-start' ]]; then
-                  yarn start &
-                  yarn wait-on-dev
-                  yarn e2e --spec "${{ inputs.spec-relative-path }}"
-                else
-                  yarn build
-                  npm install -g serve
-                  serve -s dist -l 3000 &
-                  yarn wait-on-prod
-                  yarn e2e --spec "${{ inputs.spec-relative-path }}"
-                fi
-              shell: bash
-            - id: extract-spec-filename
-              if: failure()
-              run: |
-                id=$(echo "${{ inputs.spec-relative-path }}" | sed s:/:_:g)
-                echo "::set-output name=id::$id"
-              shell: bash
-            - name: Upload test videos and screenshots on test failure
-              if: failure()
-              uses: actions/upload-artifact@v3
-              with:
-                  name: ${{ inputs.start-strategy }}-${{steps.extract-spec-filename.outputs.id}}-${{ inputs.node-version }}
-                  path: |
-                    ./cypress/videos
-                    ./cypress/screenshots
+  cypress-e2e-job:
+    name: Cypress E2E Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Set node version to ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install dependencies
+        run: yarn
+      - name: Load test .env file
+        run: mv .env.test .env
+      - name: Run E2E tests in ${{ inputs.start-strategy }} mode
+        run: |
+          if [[ ${{ inputs.start-strategy }} == 'yarn-start' ]]; then
+            yarn start &
+            yarn wait-on-dev
+            yarn e2e --spec "${{ inputs.spec-relative-path }}"
+          else
+            yarn build
+            npm install -g serve
+            serve -s dist -l 3000 &
+            yarn wait-on-prod
+            yarn e2e --spec "${{ inputs.spec-relative-path }}"
+          fi
+        shell: bash
+      - id: extract-spec-filename
+        if: failure()
+        run: |
+          id=$(echo "${{ inputs.spec-relative-path }}" | sed s:/:_:g)
+          echo "::set-output name=id::$id"
+        shell: bash
+      - name: Upload test videos and screenshots on test failure
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.start-strategy }}-${{steps.extract-spec-filename.outputs.id}}-${{ inputs.node-version }}
+          path: |
+            ./cypress/videos
+            ./cypress/screenshots
