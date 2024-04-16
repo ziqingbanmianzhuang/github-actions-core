@@ -39,23 +39,16 @@ name: CI/CD
     branches:
       - master
 
-env:
-  NODE_VERSION: 18
-
-jobs:
   unit-tests:
     name: Unit Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: paion-data/github-actions-core/.github/workflows/ui-unit-test.yml@master
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+    uses: paion-data/github-actions-core/.github/workflows/ui-unit-test.yml@master
+    with:
+      node-version: 18
 ```
 
 :::tip
 
-The example above uses Node version 18, which is specified in `NODE_VERSION`
-[environment variable](https://docs.github.com/en/actions/learn-github-actions/variables#defining-environment-variables-for-a-single-workflow)
+In the example above, the node 18 is used in the CI/CDed project.
 
 :::
 
