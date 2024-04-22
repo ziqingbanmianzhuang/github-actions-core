@@ -17,7 +17,7 @@ title: Performing Style Check on YAML & Markdown Files and Link Check
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-Inspired by [Sous Chefs](https://github.com/sous-chefs/.github/blob/main/.github/workflows/lint-unit.yml), we offer a 
+Inspired by [Sous Chefs](https://github.com/sous-chefs/.github/blob/main/.github/workflows/lint-unit.yml), we offer a
 [reusable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows) that performs the
 following code style checks:
 
@@ -109,6 +109,7 @@ import TabItem from '@theme/TabItem';
 
 <Tabs>
   <TabItem value=".mdlrc" label=".mdlrc" default>
+
     ```
     rules "~MD002", "~MD003", "~MD005", "~MD007", "~MD013", "~MD022", "~MD024", "~MD029", "~MD033", "~MD034", "~MD036", "~MD041"
     style "#{File.dirname(__FILE__)}/markdownlint.rb"
@@ -148,7 +149,6 @@ More info about rule config can be found in
 
 Create files named `.mdlrc` and `markdownlint.rb` at the root of the project and add `use-custom-mdlrc-config-file` and
 `use-custom-markdownlint-config-file` options to the workflow file like so:
-
 
 ```yaml
 name: CI/CD
