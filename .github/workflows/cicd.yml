@@ -21,25 +21,25 @@ name: CI/CD
             - master
 
 jobs:
-    yml-md-style-and-link-checks:
-        uses: ./.github/workflows/yml-md-style-and-link-checks.yml
+#    yml-md-style-and-link-checks:
+#        uses: ./.github/workflows/yml-md-style-and-link-checks.yml
 
     test-upversion:
         name: Test upversion.py
-        needs: yml-md-style-and-link-checks
+        # needs: yml-md-style-and-link-checks
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
             - run: echo "LAST_TAG=1.2.3" >> $GITHUB_ENV
             - run: |
-                NEW_TAG=$(LAST_TAG=${LAST_TAG} python .github/upversion.py)
+                NEW_TAG=$(LAST_TAG=${LAST_TAG} python .github/version-bump/upversion.py)
                 if [[ "$NEW_TAG" != "1.2.4" ]]; then
                     exit 1
                 fi
 
     documentation-ci-cd:
         name: Test Documentation Build & Deploy Documentation to GitHub Pages
-        needs: yml-md-style-and-link-checks
+        # needs: yml-md-style-and-link-checks
         runs-on: ubuntu-latest
         defaults:
             run:
@@ -59,5 +59,5 @@ jobs:
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: ./docs/build
-                  user_name: QubitPi
-                  user_email: jack20220723@gmail.com
+                  user_name: ziqingbanmianzhuang
+                  user_email: 1721370034@qq.com

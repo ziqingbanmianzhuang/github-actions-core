@@ -15,52 +15,61 @@
 name: "Frontend NPM Release"
 
 "on":
-    workflow_call:
-        inputs:
-            node-version:
-                description: 'NodeJS version, such as "16"'
-                type: string
-                required: true
-            user:
-                description: 'The GitHub username, e.g. "QubitPi"'
-                type: string
-                required: true
-            email:
-                description: 'The associated GitHub email link to the user, e.g. "qubitpi0723@gmail.com"'
-                type: string
-                required: true
-            npm-token:
-                description: "The NPM access token which allows GitHub Action to push build to npm artifactory"
-                type: string
-                required: true
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'NodeJS version, such as "16"'
+        type: string
+        required: true
+      user:
+        description: 'The GitHub username, e.g. "QubitPi"'
+        type: string
+        required: true
+      email:
+        description: 'The associated GitHub email link to the user, e.g. "qubitpi0723@gmail.com"'
+        type: string
+        required: true
+      npm-token:
+        description: "The NPM access token which allows GitHub Action to push build to npm artifactory"
+        type: string
+        required: true
 
 jobs:
-    push-release-tag:
-        uses: paion-data/github-actions-core/.github/workflows/version-bump.yml@master
+  push-release-tag:
+    name: Push new tag for releasing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
         with:
-            user: ${{ inputs.user }}
-            email: ${{ inputs.email }}
+          fetch-depth: 0
+      - run: |
+          git clone https://github.com/paion-data/github-actions-core.git ../github-actions-core
+          cp ../github-actions-core/.github/version-bump/tag-for-release.bash .github/
+          cp ../github-actions-core/.github/version-bump/upversion.py .github/
+          git config --global user.name ${{ inputs.user }}
+          git config --global user.email ${{ inputs.email }}
+          .github/tag-for-release.bash
 
-    npm-release-job:
-        name: NPM Release Job
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - name: Set node version to ${{ inputs.node-version }}
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ inputs.node-version }}
-                  cache: npm
-                  registry-url: "https://registry.npmjs.org"
-            - name: Set release version
-              run: |
-                  VERSION=$(git describe)
-                  npm version $VERSION
-              shell: bash
-            - name: Publish to NPM Packages
-              run: |
-                  npm config set '//registry.npmjs.org/:_authToken' "${{ inputs.npm-token }}"
-                  npm publish --access public
-              shell: bash
-              env:
-                  NPM_TOKEN: ${{ inputs.npm-token }}
+  npm-release-job:
+    name: NPM Release Job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set node version to ${{ inputs.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: npm
+          registry-url: "https://registry.npmjs.org"
+      - name: Set release version
+        run: |
+          VERSION=$(git describe)
+          npm version $VERSION
+        shell: bash
+      - name: Publish to NPM Packages
+        run: |
+          npm config set '//registry.npmjs.org/:_authToken' "${{ inputs.npm-token }}"
+          npm publish --access public
+        shell: bash
+        env:
+          NPM_TOKEN: ${{ inputs.npm-token }}

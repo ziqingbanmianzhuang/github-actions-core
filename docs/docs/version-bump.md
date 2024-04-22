@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-title: Bumping Semantic Version
+title: Bump Semantic (Patch) Version By GitHub Tags
 ---
 
 [//]: # (Copyright Paion Data)
