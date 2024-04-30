@@ -20,7 +20,7 @@ name: "Frontend Cypress E2E Tests"
       node-version:
         description: NodeJS version to test. Such as 18
         type: string
-        required: true
+        default: '[18]'
 
 jobs:
   list-e2e-specs:
@@ -44,7 +44,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: ${{ inputs.node-version }}
+        node-version: ${{ fromJson(inputs.node-version) }}
         start-strategy: ["yarn-start", "serve"]
         test-spec: ${{ fromJson(needs.list-e2e-specs.outputs.paths) }}
     steps:
