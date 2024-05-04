@@ -62,8 +62,20 @@ The example below is a very simple setup:
        name: Unit Tests
        needs: unit-tests
        uses: paion-data/github-actions-core/.github/workflows/cypress-e2e.yml@master
+   ```
+
+   In the example above, the node 18 is used in the CI/CDed project by default. A list of custom node versions can be
+   used to replace the default. For example, to run E2E tests in node 16, 18, and 20, simply use **node-versions**
+   parameter:
+
+   ```yaml
+   ---
+     e2e-tests:
+       name: Unit Tests
+       needs: unit-tests
+       uses: paion-data/github-actions-core/.github/workflows/cypress-e2e.yml@master
        with:
-         node-version: 18
+         node-versions: '["16", "18", "20"]'
    ```
 
 :::tip
